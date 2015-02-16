@@ -1,0 +1,9 @@
+*data
+*keys
+*.pyc
+.DS_Store
+logs/
+tmp/
+var/
+out/
+.ipy
