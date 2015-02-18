@@ -6,6 +6,9 @@ This repository holds code that will be used in my PyCon 2015 presentation.
 
 Code samples for different Python packages that run Neural Networks.
 
+Theano
+--------
+Tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb) by Coline Raffell.
 
 Dato/Graphlab:
 --------
@@ -16,6 +19,11 @@ Image tutorial can be found at this [link](https://dato.com/learn/gallery/notebo
 Basic architectures:
     * Perceptron Network for dense numeric input
     * Convolution Network for image data input
+
+
+Setup
+--------
+...
 
 Resources:
 --------
