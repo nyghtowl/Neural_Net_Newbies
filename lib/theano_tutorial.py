@@ -4,6 +4,7 @@ Theano Multilayer Perceptron Net MNIST Example / Tutorial
 '''
 
 import theano
+import theano.tensor as T
 
 class Layer(object):
     '''
@@ -34,7 +35,7 @@ class MLP(object):
     Contains main structure (layers and parameters) & functionality
     '''
     def __init__(self, W_init, b_init, activations):
-        assert len(W_init) == len(b_init) == len(activation)
+        assert len(W_init) == len(b_init) == len(activations)
         self.layers = []
         for W, b, activation in zip(W_init, b_init, activations):
             self.layers.append(Layer(W, b, activation))

@@ -10,6 +10,19 @@ Theano
 --------
 Tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb) by Coline Raffell.
 
+[MNIST code example](http://deeplearning.net/tutorial/logreg.html) 
+
+Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
+
+
+PyBrain
+--------
+
+
+Caffe
+--------
+
+
 Dato/Graphlab:
 --------
 MNIST sample tutorial can be found at this [link](https://dato.com/products/create/docs/graphlab.toolkits.deeplearning.html)
