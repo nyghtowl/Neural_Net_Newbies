@@ -26,6 +26,8 @@ References:
     - textbooks: "Pattern Recognition and Machine Learning" -
                  Christopher M. Bishop, section 4.3.2
 
+Initial Run: 39 seconds and 74 epochs with lowest error 7.489% 
+
 """
 __docformat__ = 'restructedtext en'
 
@@ -56,9 +58,9 @@ class LogisticRegression(object):
     def __init__(self, input, n_in, n_out):
         """ Logistic regression parameters 
 
-        input = theano tensor type & one minibatch
-        n_in = int & # of input units 
-        n_out = int & # ouptut units
+        input: theano tensor type & one minibatch
+        n_in: int & # of input units 
+        n_out: int & # ouptut units
 
         """
         # initialize weights as 0 and matrix of shape (n_in, n_out)
