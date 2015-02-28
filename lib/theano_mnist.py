@@ -1,29 +1,24 @@
 """
-This tutorial introduces logistic regression using Theano and stochastic
-gradient descent.
+Theano Multilayer Perceptron Net MNIST Example / Tutorial
+
+Tutorial covers logistic regression using Theano and stochastic
+gradient descent optimization method.
 
 Logistic regression is a probabilistic, linear classifier. It is parametrized
-by a weight matrix :math:`W` and a bias vector :math:`b`. Classification is
+by a weight matrix (W) and a bias vector (b). Classification is
 done by projecting data points onto a set of hyperplanes, the distance to
 which is used to determine a class membership probability.
 
 Mathematically, this can be written as:
 
-.. math::
-  P(Y=i|x, W,b) &= softmax_i(W x + b) \\
-                &= \frac {e^{W_i x + b_i}} {\sum_j e^{W_j x + b_j}}
+  P(Y=i|x, W,b) = softmax_i(W*x + b) \\
+                = \frac {e^{W_i*x + b_i}} {\sum_j e^{W_j*x + b_j}}
 
 
 The output of the model or prediction is then done by taking the argmax of
 the vector whose i'th element is P(Y=i|x).
 
-.. math::
-
   y_{pred} = argmax_i P(Y=i|x,W,b)
-
-
-This tutorial presents a stochastic gradient descent optimization method
-suitable for large datasets.
 
 
 References:
@@ -149,6 +144,30 @@ class LogisticRegression(object):
             raise NotImplementedError()
 
 
+def shared_dataset(data_xy, borrow=True):
+    """ Loads dataset into shared variables
+
+    Store our dataset in shared variables to enably copying to GPU memory
+    
+    Break data into minibatches because copying data into the GPU is slow 
+    Thus improve performance with shared variables
+    """
+    data_x, data_y = data_xy
+    shared_x = theano.shared(numpy.asarray(data_x, 
+                            dtype=theano.config.floatX),
+                            borrow=borrow)
+    shared_y = theano.shared(numpy.asarray(data_y,
+                            dtype=theano.config.floatX),
+                            borrow=borrow)
+
+    # GPU require float type to store data
+    # Change labels to floatX
+    # Need data as ints in computations becaused used as index
+    # Instead of returning ``shared_y`` we will have to cast it to int. 
+    # A hack to get around this issue
+
+    return shared_x, T.cast(shared_y, 'int32')
+
 def load_data(dataset):
     ''' Loads the dataset
 
@@ -190,37 +209,13 @@ def load_data(dataset):
     train_set, valid_set, test_set = cPickle.load(f)
     f.close()
 
-    def shared_dataset(data_xy, borrow=True):
-        """ Function that loads the dataset into shared variables
-
-        The reason we store our dataset in shared variables is to allow
-        Theano to copy it into the GPU memory (when code is run on GPU).
-        Since copying data into the GPU is slow, copying a minibatch everytime
-        is needed (the default behaviour if the data is not in a shared
-        variable) would lead to a large decrease in performance.
-        """
-        data_x, data_y = data_xy
-        shared_x = theano.shared(numpy.asarray(data_x,
-                                               dtype=theano.config.floatX),
-                                 borrow=borrow)
-        shared_y = theano.shared(numpy.asarray(data_y,
-                                               dtype=theano.config.floatX),
-                                 borrow=borrow)
-        # When storing data on the GPU it has to be stored as floats
-        # therefore we will store the labels as ``floatX`` as well
-        # (``shared_y`` does exactly that). But during our computations
-        # we need them as ints (we use labels as index, and if they are
-        # floats it doesn't make sense) therefore instead of returning
-        # ``shared_y`` we will have to cast it to int. This little hack
-        # lets ous get around this issue
-        return shared_x, T.cast(shared_y, 'int32')
-
     test_set_x, test_set_y = shared_dataset(test_set)
     valid_set_x, valid_set_y = shared_dataset(valid_set)
     train_set_x, train_set_y = shared_dataset(train_set)
 
     rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
             (test_set_x, test_set_y)]
+
     return rval
 
 
@@ -233,16 +228,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     This is demonstrated on MNIST.
 
-    :type learning_rate: float
-    :param learning_rate: learning rate used (factor for the stochastic
-                          gradient)
-
-    :type n_epochs: int
-    :param n_epochs: maximal number of epochs to run the optimizer
-
-    :type dataset: string
-    :param dataset: the path of the MNIST dataset file from
-                 http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz
+    learning_rate = float offsets how much adjustment is made to weights (stochastic gradient factor)
+    n_epochs = int maximal number of epochs to run the optimizer
+    dataset = string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
 
     """
     datasets = load_data(dataset)
@@ -270,7 +258,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     y = T.ivector('y')  # labels, presented as 1D vector of [int] labels
 
     # construct the logistic regression class
-    # Each MNIST image has size 28*28
+    # Each MNIST image has size 28*28 so 784 node input and 10 node ouput
     classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
 
     # the cost we minimize during training is the negative log likelihood of
@@ -341,8 +329,11 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     done_looping = False
     epoch = 0
+
+    # 1000 epochs
     while (epoch < n_epochs) and (not done_looping):
         epoch = epoch + 1
+        # 83 training baches = 83 loops
         for minibatch_index in xrange(n_train_batches):
 
             minibatch_avg_cost = train_model(minibatch_index)
@@ -367,7 +358,8 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
                 # if we got the best validation score until now
                 if this_validation_loss < best_validation_loss:
-                    #improve patience if loss improvement is good enough
+                    # improve patience if loss improvement is good enough
+                    # if major improvements in error reduction, wait a lot longer before stopping
                     if this_validation_loss < best_validation_loss *  \
                        improvement_threshold:
                         patience = max(patience, iter * patience_increase)
@@ -392,6 +384,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                         )
                     )
 
+            # patience at a min is 5000 & this determines if it will stop
             if patience <= iter:
                 done_looping = True
                 break

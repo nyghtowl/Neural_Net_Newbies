@@ -1,6 +1,7 @@
 *data
 *keys
 *.pyc
+*.ipynb_checkpoints
 .DS_Store
 logs/
 tmp/
