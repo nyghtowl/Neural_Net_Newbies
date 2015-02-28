@@ -1,0 +1,32 @@
+!obj:pylearn2.train.Train {
+    dataset: &train !obj:pylearn2.datasets.dense_design_matrix.DenseDesignMatrix {
+        X: !pkl: 'mnist_train_X.pkl',
+        y: !pkl: 'mnist_train_y.pkl',
+        y_labels: 10,
+    },
+    model: !obj:pylearn2_mnist.LogisticRegression {
+        nvis: 784,
+        nclasses: 10,
+    },
+    algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
+        batch_size: 200,
+        learning_rate: 1e-3,
+        monitoring_dataset: {
+            'train' : *train,
+            'valid' : !obj:pylearn2.datasets.dense_design_matrix.DenseDesignMatrix {
+                X: !pkl: 'mnist_valid_X.pkl',
+                y: !pkl: 'mnist_valid_y.pkl',
+                y_labels: 10,
+            },
+            'test' : !obj:pylearn2.datasets.dense_design_matrix.DenseDesignMatrix {
+                X: !pkl: 'mnist_test_X.pkl',
+                y: !pkl: 'mnist_test_y.pkl',
+                y_labels: 10,
+            },
+        },
+        cost: !obj:pylearn2_mnist.LogisticRegressionCost {},
+        termination_criterion: !obj:pylearn2.termination_criteria.EpochCounter {
+            max_epochs: 15
+        },
+    },
+}

@@ -1,10 +1,8 @@
 Neural_Net_Newbies
 ==================
 
-This repository holds code that will be used in my PyCon 2015 presentation.
+Repository of different python packages' code examples to run NN on MNIST data. Some of the code here will be used in my PyCon 2015 presentation.
 
-
-Code samples for different Python packages that run Neural Networks.
 
 Theano
 --------
@@ -18,6 +16,13 @@ Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/th
 
 PyLearn2
 --------
+
+MNIST example at this [link](https://vdumoulin.github.io/articles/extending-pylearn2/) provides a solid intro to PyLearn2
+
+Run from command line:
+        python -c "from pylearn2.utils import serial; \
+           train_obj = serial.load_train_file('pylearn2_log_reg.yaml'); \
+           train_obj.main_loop()"
 
 
 PyBrain
