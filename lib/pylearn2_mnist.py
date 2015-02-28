@@ -19,8 +19,11 @@ class LogisticRegression(Model):
         self.nvis = nvis
         self.nclasses = nclasses
 
+        # Randomly samples weights from uniform distribution for the structure size
         W_value = numpy.random.uniform(size=(self.nvis, self.nclasses))
+        # Shared prepares GPU compatible code 
         self.W = sharedX(W_value, 'W')
+        # Generates bias per ouptput 
         b_value = numpy.zeros(self.nclasses)
         self.b = sharedX(b_value, 'b')
         self._params = [self.W, self.b]
@@ -29,15 +32,19 @@ class LogisticRegression(Model):
         self.output_space = VectorSpace(dim=self.nclasses)
 
     def logistic_regression(self, inputs):
+        # Equation run on each hidden node
         return T.nnet.softmax(T.dot(inputs, self.W) + self.b)
 
 
 class LogisticRegressionCost(DefaultDataSpecsMixin, Cost):
-    supervised = True
+    # Cost will expect inputs and targets
+    supervised = True 
 
     def expr(self, model, data, **kwargs):
+        # Input checking
         space, source = self.get_data_specs(model)
-        space.validate(data)
+        # Confirms data received is what was requested
+        space.validate(data) 
         
         inputs, targets = data
         outputs = model.logistic_regression(inputs)

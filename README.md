@@ -14,6 +14,8 @@ Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist
 Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
 
 
+Setup: pip install theano
+
 PyLearn2
 --------
 
@@ -24,6 +26,8 @@ Run from command line:
            train_obj = serial.load_train_file('pylearn2_log_reg.yaml'); \
            train_obj.main_loop()"
 
+
+Setup:
 
 PyBrain
 --------
@@ -43,6 +47,8 @@ Basic architectures:
     * Perceptron Network for dense numeric input
     * Convolution Network for image data input
 
+
+Setup: pip install graphlab-create
 
 Setup
 --------
