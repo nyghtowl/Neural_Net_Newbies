@@ -6,18 +6,58 @@ Repository of different python packages' code examples to run NN on MNIST data. 
 [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) main site for reference.
 
 
-
-Theano
+Caffe
 --------
-
-The MNIST example is from this [link](http://deeplearning.net/tutorial/logreg.html) with some modifications especially around comments.
-
-Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz).
-
-Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
+MNIST example at this [link](?)
 
 
-Setup: pip install theano
+Setup:
+
+[General Reference](http://tutorial.caffe.berkeleyvision.org/)
+
+
+Graphlab/Dato:
+--------
+MNIST sample tutorial can be found at this [link](https://dato.com/products/create/docs/graphlab.toolkits.deeplearning.html)
+
+Image tutorial can be found at this [link](https://dato.com/learn/gallery/notebooks/build_imagenet_deeplearning.html)
+
+Basic architectures:
+    * Perceptron Network for dense numeric input
+    * Convolution Network for image data input
+
+
+Setup: pip install graphlab-create
+
+[General Reference](https://dato.com/products/create/docs/generated/graphlab.neuralnet_classifier.NeuralNetClassifier.html)
+
+Lasagne 
+--------
+MNIST example at this [link](https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py)
+
+Run from command line:
+  python lib/lasagne_mnist.py
+
+Setup:
+
+[General Reference](https://github.com/benanne/Lasagne)
+
+
+
+PyBrain
+--------
+MNIST example at this [link](http://martin-thoma.com/classify-mnist-with-pybrain/)
+
+Run from command line:
+    python lib/pybrain_mnist.py -e 10000 -H 300
+
+Setup:
+    pip install pybrain
+    https://github.com/pybrain/pybrain/wiki/installation
+
+[General Reference](http://pybrain.org/docs/)
+
+
 
 PyLearn2
 --------
@@ -55,34 +95,35 @@ Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-a
 
     Note you may need to add a path to the package and/or data 
 
-PyBrain
+
+[General Reference](http://deeplearning.net/software/pylearn2/)
+
+Scikit-Learn
 --------
 
+Setup:
+    pip install -U numpy scipy scikit-learn
+    http://scikit-learn.org/stable/install.html
 
-Caffe
+[General Reference](http://scikit-learn.org/stable/modules/neural_networks.html)
+
+Theano
 --------
 
+The MNIST example is from this [link](http://deeplearning.net/tutorial/logreg.html) with some modifications especially around comments.
 
-Graphlab/Dato:
+Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz).
+
+Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
+
+
+Setup: 
+    pip install theano
+
+[General Reference](http://deeplearning.net/software/theano/index.html)
+
+
+Setup:
 --------
-MNIST sample tutorial can be found at this [link](https://dato.com/products/create/docs/graphlab.toolkits.deeplearning.html)
+Most setup references assume python and pip installed. Check documentation for other options especially if setting up on distributed systems and GPUs.
 
-Image tutorial can be found at this [link](https://dato.com/learn/gallery/notebooks/build_imagenet_deeplearning.html)
-
-Basic architectures:
-    * Perceptron Network for dense numeric input
-    * Convolution Network for image data input
-
-
-Setup: pip install graphlab-create
-
-Setup
---------
-...
-
-
-
-Resources:
---------
-[Deep Learning for NLP] (http://techtalks.tv/talks/deep-learning-for-nlp-without-magic-part-1/58414/)
-[Deep Learning: Machine Perception and Its Applications] (https://www.youtube.com/watch?v=hykoKDl1AtE)
