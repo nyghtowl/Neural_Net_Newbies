@@ -4,7 +4,7 @@
         y: !pkl: 'data/pylearn2/mnist_train_y.pkl',
         y_labels: 10,
     },
-    model: !obj:pylearn2_mnist.LogisticRegression {
+    model: !obj:lib.pylearn2_mnist.LogisticRegression {
         nvis: 784,
         nclasses: 10,
     },
@@ -24,7 +24,7 @@
                 y_labels: 10,
             },
         },
-        cost: !obj:pylearn2_mnist.LogisticRegressionCost {},
+        cost: !obj:lib.pylearn2_mnist.LogisticRegressionCost {},
         termination_criterion: !obj:pylearn2.termination_criteria.EpochCounter {
             max_epochs: 15
         },
