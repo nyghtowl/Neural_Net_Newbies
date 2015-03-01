@@ -3,6 +3,9 @@ Neural_Net_Newbies
 
 Repository of different python packages' code examples to run NN on MNIST data. Some of the code here will be used in my PyCon 2015 presentation.
 
+[MNIST Dataset](http://yann.lecun.com/exdb/mnist/) main site for reference.
+
+
 
 Theano
 --------
@@ -21,13 +24,36 @@ PyLearn2
 
 MNIST example at this [link](https://vdumoulin.github.io/articles/extending-pylearn2/) provides a solid intro to PyLearn2
 
+[dataset](http://deeplearning.net/data/mnist/mnist.pkl.gz)
+
+Setup dataset 
+        gunzip mnist.pkl.gz
+        python -c "from pylearn2.utils import serial; \
+           data = serial.load('mnist.pkl'); \
+           serial.save('mnist_train_X.pkl', data[0][0]); \
+           serial.save('mnist_train_y.pkl', data[0][1].reshape((-1, 1))); \
+           serial.save('mnist_valid_X.pkl', data[1][0]); \
+           serial.save('mnist_valid_y.pkl', data[1][1].reshape((-1, 1))); \
+           serial.save('mnist_test_X.pkl', data[2][0]); \
+           serial.save('mnist_test_y.pkl', data[2][1].reshape((-1, 1)))"
+
 Run from command line:
         python -c "from pylearn2.utils import serial; \
-           train_obj = serial.load_train_file('pylearn2_log_reg.yaml'); \
+           train_obj = serial.load_train_file('lib/pylearn2_log_reg.yaml'); \
            train_obj.main_loop()"
 
 
 Setup:
+Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-and-installation)
+
+        git clone git://github.com/lisa-lab/pylearn2.git
+        cd pylearn2 && python setup.py develop
+
+        OR 
+
+        cd pylearn2 && python setup.py develop --user
+
+    Note you may need to add a path to the package and/or data 
 
 PyBrain
 --------

@@ -103,13 +103,13 @@ class LogisticRegression(object):
         Return the mean of the negative log-likelihood of the prediction
         of this model under a given target distribution.
 
-        y = theano tensor type & vector of correct labels for each example
+        y: theano tensor type & vector of correct labels for each example
 
-        y.shape[0] = number (n) of examples in a minibatch        
+        y.shape[0]: number (n) of examples in a minibatch        
         T.arange(y.shape[0]) creates [0,1,2,... n-1] vector
-        T.log(self.p_y_given_x) = log-probabilities (LP) matrix one row per example and one column per class 
-        LP[T.arange(y.shape[0]),y] = minibatch vector containing [LP[0,y[0]], LP[1,y[1]], ..., - returns the log-probability of the correct label at that point in the matrix
-        T.mean(LP[T.arange(y.shape[0]),y]) = the mean log-likelihood across the minibatch 
+        T.log(self.p_y_given_x): log-probabilities (LP) matrix one row per example and one column per class 
+        LP[T.arange(y.shape[0]),y]: minibatch vector containing [LP[0,y[0]], LP[1,y[1]], ..., - returns the log-probability of the correct label at that point in the matrix
+        T.mean(LP[T.arange(y.shape[0]),y]): the mean log-likelihood across the minibatch 
         
         Note: we use the mean instead of the sum so that
               the learning rate is less dependent on the batch size
@@ -125,8 +125,8 @@ class LogisticRegression(object):
         over the total number of examples of the minibatch ; zero one
         loss over the size of the minibatch
 
-        y = theano tensor type & vector of correct labels for each example
-        y_pred = ?
+        y: theano tensor type & vector of correct labels for each example
+        y_pred: ?
 
         Note: this error rate is extremely expensive to scale and thus negative log-likelihood is more prefered
         """
@@ -173,11 +173,11 @@ def shared_dataset(data_xy, borrow=True):
 def load_data(dataset):
     ''' Loads the dataset
 
-    datset = string type and path to dataset
+    datset: string type and path to dataset
 
-    train_set, valid_set, test_set = tuple(input, target) type
-    input  = 2 dimension matrix numpy.ndarray & example per row
-    target = 1 dimension vector numpy.ndarray with same length as # input rows
+    train_set, valid_set, test_set: tuple(input, target) type
+    input : 2 dimension matrix numpy.ndarray & example per row
+    target: 1 dimension vector numpy.ndarray with same length as # input rows
 
     index is used to map target to input
 
@@ -230,9 +230,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     This is demonstrated on MNIST.
 
-    learning_rate = float offsets how much adjustment is made to weights (stochastic gradient factor)
-    n_epochs = int maximal number of epochs to run the optimizer
-    dataset = string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
+    learning_rate: float offsets how much adjustment is made to weights (stochastic gradient factor)
+    n_epochs: int maximal number of epochs to run the optimizer
+    dataset: string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
 
     """
     datasets = load_data(dataset)
