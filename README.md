@@ -39,8 +39,9 @@ Run from command line:
   python lib/lasagne_mnist.py
 
 Setup:
+    http://lasagne.readthedocs.org/en/latest/user/installation.html
 
-[General Reference](https://github.com/benanne/Lasagne)
+[General Reference](http://lasagne.readthedocs.org/en/latest/)
 
 
 
@@ -101,6 +102,11 @@ Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-a
 Scikit-Learn
 --------
 
+MNIST example is from [link](http://www.pyimagesearch.com/2014/06/23/applying-deep-learning-rbm-mnist-using-python/)
+
+Run from command line:
+    python sklearn_mnist.py --dataset data/digits.csv --test 0.4
+
 Setup:
     pip install -U numpy scipy scikit-learn
     http://scikit-learn.org/stable/install.html
@@ -116,6 +122,8 @@ Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist
 
 Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
 
+Run from command line:
+    python lib/theano_mnist.py
 
 Setup: 
     pip install theano
