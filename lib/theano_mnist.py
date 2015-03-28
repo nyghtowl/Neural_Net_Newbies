@@ -216,36 +216,19 @@ def load_data(dataset):
 
     return data_sets
 
+def create_structure(learning_rate=0.13, n_epochs=1000, dataset='mnist.pkl.gz',
+                    batch_size=600):
+    '''
+    Define neural net structure | Theano functions to address structure
 
-def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
-                           dataset='mnist.pkl.gz',
-                           batch_size=600):
-    """
-    Demonstrate stochastic gradient descent optimization of a log-linear
-    model
-
-    This is demonstrated on MNIST.
+    Tune neural net hyper parameters.
 
     learning_rate: float offsets how much adjustment is made to weights (stochastic gradient factor)
     n_epochs: int maximal number of epochs to run the optimizer
     dataset: string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
+    batch_size: splitting the dataset
 
-    """
-    datasets = load_data(dataset)
-
-    train_set_x, train_set_y = datasets[0]
-    valid_set_x, valid_set_y = datasets[1]
-    test_set_x, test_set_y = datasets[2]
-
-    # compute number of minibatches for training, validation and testing
-    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
-    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
-    n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
-
-    ######################
-    # BUILD ACTUAL MODEL #
-    ######################
-    print '... building the model'
+    '''
 
     # allocate symbolic variables for the data
     index = T.lscalar()  # index to a [mini]batch
@@ -262,7 +245,6 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     # the cost we minimize during training is the negative log likelihood of
     # the model in symbolic format
     cost = classifier.negative_log_likelihood(y)
-
 
     # compiling a Theano function `train_model` that returns the cost, but in
     # the same time updates the parameter of the model based on the rules
@@ -307,11 +289,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     updates = [(classifier.W, classifier.W - learning_rate * g_W),
                (classifier.b, classifier.b - learning_rate * g_b)]
 
-
-    ###############
-    # TRAIN MODEL #
-    ###############
-    print '... training the model'
+def train_model():
     # early-stopping parameters
     patience = 5000  # look as this many examples regardless
     patience_increase = 2  # wait this much longer when a new best is
@@ -390,22 +368,52 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 break
 
     end_time = time.clock()
+
+def evaluate_model():
+
     print(('Optimization complete with best validation score of %f %%, with test performance %f %%') % (best_validation_loss * 100., test_score * 100.))
     print 'The code run for %d epochs, with %f epochs/sec' % (epoch, 1. * epoch / (end_time - start_time))
     print >> sys.stderr, ('The code for file ' + os.path.split('__file__')[1] + ' ran for %.1fs' % ((end_time - start_time)))
 
 
+
+def sgd_optimization_mnist():
+    """
+    Demonstrate stochastic gradient descent optimization of a log-linear
+    model
+
+    """
+    pass
+
+
 def main():
     '''
-    learning_rate: float offsets how much adjustment is made to weights (stochastic gradient factor)
-    n_epochs: int maximal number of epochs to run the optimizer
-    dataset: string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
+
     '''
 
     learning_rate=0.13
     n_epochs=1000
     dataset='mnist.pkl.gz'
     batch_size=600
+
+    # Load & split datasets
+    print '... load and setup data'
+
+    datasets = load_data(dataset)
+
+    train_set_x, train_set_y = datasets[0]
+    valid_set_x, valid_set_y = datasets[1]
+    test_set_x, test_set_y = datasets[2]
+
+    # compute number of minibatches for training, validation and testing
+    n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
+    n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
+    n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
+
+    print '... building the model'
+
+    print '... training the model'
+
 
 if __name__ == '__main__':
     sgd_optimization_mnist()
