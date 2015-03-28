@@ -32,13 +32,13 @@ def create_structure():
 
     return structure
 
-def train_model(data, net):
+def train_model(data, target, structure, max_iterations):
     '''
     Create convolutional NN 1 layer model.
 
     Model automatically sets validation to check model performance when training
     '''
-    return graphlab.neuralnet_classifier.create(data, target='label', network = net, max_iterations=3, validation_set=None)
+    return graphlab.neuralnet_classifier.create(data, target=target, structure=structure, max_iterations=max_iterations)
 
 def get_features(data):
     '''
@@ -63,11 +63,11 @@ def evaluate_model(model, test_data):
 
     cf_mat = eval_['confusion_matrix']
     
-    print "Confusion Matrix True Positive",
-    cf_mat[cf_mat['target_label'] == cf_mat['predicted_label']].groupby('target_label', graphlab.aggregate.SUM('count')).sort('target_label')
+    print "Confusion Matrix Correct Predictions"
+    print cf_mat[cf_mat['target_label'] == cf_mat['predicted_label']].groupby('target_label', graphlab.aggregate.SUM('count')).sort('target_label')
 
-    print "Confusion Matrix True Negative",
-    cf_mat[cf_mat['target_label'] != cf_mat['predicted_label']].groupby('target_label', graphlab.aggregate.SUM('count')).sort('target_label')
+    print "Confusion Matrix Prediction Mistakes"
+    print cf_mat[cf_mat['target_label'] != cf_mat['predicted_label']].groupby('target_label', graphlab.aggregate.SUM('count')).sort('target_label')
 
 def main(set_net_structure=True):
     '''
@@ -81,7 +81,7 @@ def main(set_net_structure=True):
     else:
         structure = None
 
-    model = train_model(train_data, structure)
+    model = train_model(train_data, 'label', structure,  3)
 
     evaluate_model(model, test_data)
 

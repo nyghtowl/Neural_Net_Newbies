@@ -26,6 +26,8 @@ Basic architectures:
     * Perceptron Network for dense numeric input
     * Convolution Network for image data input
 
+Run from command line:
+  python lib/graphlab_mnist.py
 
 Setup: pip install graphlab-create
 
@@ -34,6 +36,8 @@ Setup: pip install graphlab-create
 Lasagne 
 --------
 MNIST example at this [link](https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py)
+
+Built off of Theano
 
 Run from command line:
   python lib/lasagne_mnist.py
@@ -77,6 +81,8 @@ Setup dataset
            serial.save('mnist_valid_y.pkl', data[1][1].reshape((-1, 1))); \
            serial.save('mnist_test_X.pkl', data[2][0]); \
            serial.save('mnist_test_y.pkl', data[2][1].reshape((-1, 1)))"
+
+Built off of Theano
 
 Run from command line:
         python -c "from pylearn2.utils import serial; \
@@ -133,5 +139,5 @@ Setup:
 
 Setup:
 --------
-Most setup references assume python and pip installed. Check documentation for other options especially if setting up on distributed systems and GPUs.
+Most setup references assume python and pip installed. Check documentation for other options especially if setting up on GPUs.
 
