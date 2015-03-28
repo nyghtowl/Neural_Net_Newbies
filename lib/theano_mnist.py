@@ -28,6 +28,8 @@ References:
 
 Initial Run: 39 seconds and 74 epochs with lowest error 7.489% 
 
+Code initially pulled from: http://deeplearning.net/tutorial/logreg.html
+
 """
 __docformat__ = 'restructedtext en'
 
@@ -55,7 +57,7 @@ class LogisticRegression(object):
     Classification is done by mapping data points onto a set of hyperplanes and the distance from the division determines class membership probability.
     """
 
-    def __init__(self, input, n_in, n_out):
+    def __init__(self, input, n_in, n_out, borrow=True):
         """ Logistic regression parameters 
 
         input: theano tensor type & one minibatch
@@ -70,16 +72,16 @@ class LogisticRegression(object):
                 dtype=theano.config.floatX
             ),
             name='W',
-            borrow=True
+            borrow=borrow
         )
-        # initialize baises b as a vector of 0s and vector of shape (n_out)
+        # initialize biases b as a vector of 0s and vector of shape (n_out)
         self.b = theano.shared(
             value=numpy.zeros(
                 (n_out,),
                 dtype=theano.config.floatX
             ),
             name='b',
-            borrow=True
+            borrow=borrow
         )
 
         # model structure to compute matrix of classification probabilities - depending on how many classification options there are it will return the probabilities of belonging to each class
@@ -97,8 +99,6 @@ class LogisticRegression(object):
     def negative_log_likelihood(self, y):
         """ Negative Log_likelihood Loss
         Loss function or cost function to minimize
-        Mean over the dataset of individual error terms 
-            distance of a prediction from target distribution
         
         Return the mean of the negative log-likelihood of the prediction
         of this model under a given target distribution.
@@ -113,6 +113,7 @@ class LogisticRegression(object):
         
         Note: we use the mean instead of the sum so that
               the learning rate is less dependent on the batch size
+              cross entropy is a good alternative loss function for softmax
         """
 
         return -T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])
@@ -176,8 +177,8 @@ def load_data(dataset):
     datset: string type and path to dataset
 
     train_set, valid_set, test_set: tuple(input, target) type
-    input : 2 dimension matrix numpy.ndarray & example per row
-    target: 1 dimension vector numpy.ndarray with same length as # input rows
+    input : 2 dimension matrix numpy.ndarray & example per row | tensor
+    target: 1 dimension vector numpy.ndarray with same length as # input rows | elemwise
 
     index is used to map target to input
 
@@ -187,12 +188,7 @@ def load_data(dataset):
     data_dir, data_file = os.path.split(dataset)
     if data_dir == "" and not os.path.isfile(dataset):
         # Check if dataset is in the data directory.
-        new_path = os.path.join(
-            os.path.split(__file__)[0],
-            "..",
-            "data",
-            dataset
-        )
+        new_path = os.path.join(os.path.split('__file__')[0], "..", "data", dataset)
         if os.path.isfile(new_path) or data_file == 'mnist.pkl.gz':
             dataset = new_path
 
@@ -215,10 +211,10 @@ def load_data(dataset):
     valid_set_x, valid_set_y = shared_dataset(valid_set)
     train_set_x, train_set_y = shared_dataset(train_set)
 
-    rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
+    data_sets = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
             (test_set_x, test_set_y)]
 
-    return rval
+    return data_sets
 
 
 def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
@@ -267,34 +263,6 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     # the model in symbolic format
     cost = classifier.negative_log_likelihood(y)
 
-    # compiling a Theano function that computes the mistakes that are made by
-    # the model on a minibatch
-    test_model = theano.function(
-        inputs=[index],
-        outputs=classifier.errors(y),
-        givens={
-            x: test_set_x[index * batch_size: (index + 1) * batch_size],
-            y: test_set_y[index * batch_size: (index + 1) * batch_size]
-        }
-    )
-
-    validate_model = theano.function(
-        inputs=[index],
-        outputs=classifier.errors(y),
-        givens={
-            x: valid_set_x[index * batch_size: (index + 1) * batch_size],
-            y: valid_set_y[index * batch_size: (index + 1) * batch_size]
-        }
-    )
-
-    # compute the gradient of cost with respect to theta = (W,b)
-    g_W = T.grad(cost=cost, wrt=classifier.W)
-    g_b = T.grad(cost=cost, wrt=classifier.b)
-
-    # specify how to update the parameters of the model as a list of
-    # (variable, update expression) pairs.
-    updates = [(classifier.W, classifier.W - learning_rate * g_W),
-               (classifier.b, classifier.b - learning_rate * g_b)]
 
     # compiling a Theano function `train_model` that returns the cost, but in
     # the same time updates the parameter of the model based on the rules
@@ -308,6 +276,37 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
             y: train_set_y[index * batch_size: (index + 1) * batch_size]
         }
     )
+
+    # compiling a Theano function that computes the mistakes that are made by
+    # the model on a minibatch
+
+    validate_model = theano.function(
+        inputs=[index],
+        outputs=classifier.errors(y),
+        givens={
+            x: valid_set_x[index * batch_size: (index + 1) * batch_size],
+            y: valid_set_y[index * batch_size: (index + 1) * batch_size]
+        }
+    )
+
+    test_model = theano.function(
+        inputs=[index],
+        outputs=classifier.errors(y),
+        givens={
+            x: test_set_x[index * batch_size: (index + 1) * batch_size],
+            y: test_set_y[index * batch_size: (index + 1) * batch_size]
+        }
+    )
+
+    # creating structure to compute the gradient of cost with respect to theta = (W,b)
+    g_W = T.grad(cost=cost, wrt=classifier.W)
+    g_b = T.grad(cost=cost, wrt=classifier.b)
+
+    # specify how to update the parameters of the model as a list of
+    # (variable, update expression) pairs.
+    updates = [(classifier.W, classifier.W - learning_rate * g_W),
+               (classifier.b, classifier.b - learning_rate * g_b)]
+
 
     ###############
     # TRAIN MODEL #
@@ -332,7 +331,6 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     done_looping = False
     epoch = 0
 
-    # 1000 epochs
     while (epoch < n_epochs) and (not done_looping):
         epoch = epoch + 1
         # 83 training baches = 83 loops
@@ -392,18 +390,22 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 break
 
     end_time = time.clock()
-    print(
-        (
-            'Optimization complete with best validation score of %f %%,'
-            'with test performance %f %%'
-        )
-        % (best_validation_loss * 100., test_score * 100.)
-    )
-    print 'The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time))
-    print >> sys.stderr, ('The code for file ' +
-                          os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time)))
+    print(('Optimization complete with best validation score of %f %%, with test performance %f %%') % (best_validation_loss * 100., test_score * 100.))
+    print 'The code run for %d epochs, with %f epochs/sec' % (epoch, 1. * epoch / (end_time - start_time))
+    print >> sys.stderr, ('The code for file ' + os.path.split('__file__')[1] + ' ran for %.1fs' % ((end_time - start_time)))
+
+
+def main():
+    '''
+    learning_rate: float offsets how much adjustment is made to weights (stochastic gradient factor)
+    n_epochs: int maximal number of epochs to run the optimizer
+    dataset: string MNIST dataset file path (http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz)
+    '''
+
+    learning_rate=0.13
+    n_epochs=1000
+    dataset='mnist.pkl.gz'
+    batch_size=600
 
 if __name__ == '__main__':
     sgd_optimization_mnist()
