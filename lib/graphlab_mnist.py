@@ -73,6 +73,7 @@ def main(set_net_structure=True):
     '''
     Runs the full program to train the model and then evaluate
     '''
+    
     train_data = load_data('http://s3.amazonaws.com/GraphLab-Datasets/mnist/sframe/train')
     test_data = load_data('http://s3.amazonaws.com/GraphLab-Datasets/mnist/sframe/test')
 
