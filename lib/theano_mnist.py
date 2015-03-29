@@ -243,7 +243,7 @@ class NeuralNet(object):
         '''
         Define neural net structure | Theano functions to address structure
 
-        Tune neural net hyper parameters.
+        Apply loss function and define optimization method to tune neural net weights.
 
         learning_rate: float offsets how much adjustment is made to weights (stochastic gradient factor)
 
