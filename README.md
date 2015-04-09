@@ -118,16 +118,7 @@ Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-a
 [General Reference](http://deeplearning.net/software/pylearn2/)
 
 
-Caffe
---------
-MNIST example at this [link](?)
-
-
-Setup:
-
-[General Reference](http://tutorial.caffe.berkeleyvision.org/)
-
-Setup:
+Other:
 --------
 Most setup references assume python and pip installed. Check documentation for other options especially if setting up on GPUs.
 

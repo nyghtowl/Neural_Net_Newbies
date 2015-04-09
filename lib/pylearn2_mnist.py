@@ -1,6 +1,8 @@
 '''
 PyLearn2 MNIST Example / Tutorial
 
+Note: Uses pylearn2_mnist yaml file
+
 '''
 
 import os
