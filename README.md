@@ -5,6 +5,7 @@ Repository of different python packages' code examples to run build, train and r
 
 [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) main site for reference.
 
+Note: All examples assume supervised learning.
 
 Graphlab/Dato:
 --------
@@ -78,7 +79,7 @@ Setup:
 PyLearn2
 --------
 
-MNIST example at this [link](https://vdumoulin.github.io/articles/extending-pylearn2/) provides a solid intro to PyLearn2
+MNIST example referenced from  this [link](https://vdumoulin.github.io/articles/extending-pylearn2/) with modifications. 
 
 [dataset](http://deeplearning.net/data/mnist/mnist.pkl.gz)
 
@@ -93,7 +94,7 @@ Setup dataset
            serial.save('mnist_test_X.pkl', data[2][0]); \
            serial.save('mnist_test_y.pkl', data[2][1].reshape((-1, 1)))"
 
-Built off of Theano
+Built off of Theano and requires a yaml file to config neural net structure and optimization method.
 
 Run from command line:
         python -c "from pylearn2.utils import serial; \
@@ -115,21 +116,6 @@ Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-a
 
 
 [General Reference](http://deeplearning.net/software/pylearn2/)
-
-
-PyBrain
---------
-MNIST example at this [link](http://martin-thoma.com/classify-mnist-with-pybrain/)
-
-Run from command line:
-    python lib/pybrain_mnist.py -e 10000 -H 300
-
-Setup:
-    pip install pybrain
-    https://github.com/pybrain/pybrain/wiki/installation
-
-[General Reference](http://pybrain.org/docs/)
-
 
 
 Caffe

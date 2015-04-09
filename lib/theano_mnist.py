@@ -164,7 +164,7 @@ class LogisticRegression(object):
 
     def negative_log_likelihood(self, y):
         """ Negative Log_likelihood Loss
-        Loss function or cost function to minimize
+        Loss function / cost function to minimize
         
         Return the mean of the negative log-likelihood of the prediction
         of this model under a given target distribution.

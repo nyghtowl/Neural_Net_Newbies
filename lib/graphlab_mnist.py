@@ -73,17 +73,20 @@ def main(set_net_structure=True):
     '''
     Runs the full program to train the model and then evaluate
     '''
-    
+    print '... load and setup data'
     train_data = load_data('http://s3.amazonaws.com/GraphLab-Datasets/mnist/sframe/train')
     test_data = load_data('http://s3.amazonaws.com/GraphLab-Datasets/mnist/sframe/test')
 
+    print '... building the model structure'
     if set_net_structure:
         structure = create_structure()
     else:
         structure = None
 
+    print '... training the model'
     model = train_model(train_data, 'label', structure,  3)
 
+    print '... evaluate model' 
     evaluate_model(model, test_data)
 
     print "Evaluation completed"

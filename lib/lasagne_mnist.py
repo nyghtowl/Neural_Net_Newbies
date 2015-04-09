@@ -32,7 +32,6 @@ def _load_data(url=DATA_URL, filename=DATA_FILENAME):
         data = pickle.load(f)
     return data
 
-
 def load_data():
     data = _load_data()
     X_train, y_train = data[0]
@@ -52,7 +51,6 @@ def load_data():
         input_dim=X_train.shape[1],
         output_dim=10,
         )
-
 
 def build_model(input_dim, output_dim,
                 batch_size=BATCH_SIZE, num_hidden_units=NUM_HIDDEN_UNITS):
@@ -92,7 +90,6 @@ def build_model(input_dim, output_dim,
         )
 
     return l_out
-
 
 def create_iter_functions(dataset, output_layer,
                           X_tensor_type=T.matrix,
@@ -187,13 +184,15 @@ def train(iter_funcs, dataset, batch_size=BATCH_SIZE):
 
 def main(num_epochs=NUM_EPOCHS):
     dataset = load_data()
+
+    print '... building the model structure'
     output_layer = build_model(
         input_dim=dataset['input_dim'],
         output_dim=dataset['output_dim'],
         )
     iter_funcs = create_iter_functions(dataset, output_layer)
 
-    print("Starting training...")
+    print '... training the model'
     for epoch in train(iter_funcs, dataset):
         print("Epoch %d of %d" % (epoch['number'], num_epochs))
         print("  training loss:\t\t%.6f" % epoch['train_loss'])
