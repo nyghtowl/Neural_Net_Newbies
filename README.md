@@ -1,19 +1,9 @@
 Neural_Net_Newbies
 ==================
 
-Repository of different python packages' code examples to run NN on MNIST data. Some of the code here will be used in my PyCon 2015 presentation.
+Repository of different python packages' code examples to run build, train and run a neural net on MNIST data. A small sample is used in my PyCon 2015 presentation and the rest is for reference afterwards.
 
 [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) main site for reference.
-
-
-Caffe
---------
-MNIST example at this [link](?)
-
-
-Setup:
-
-[General Reference](http://tutorial.caffe.berkeleyvision.org/)
 
 
 Graphlab/Dato:
@@ -29,15 +19,35 @@ Basic architectures:
 Run from command line:
   python lib/graphlab_mnist.py
 
-Setup: pip install graphlab-create
+For presentation code checkout lib/slide_code.py
+
+Setup: pip install graphlab-create & add product key to environment variable or config file
 
 [General Reference](https://dato.com/products/create/docs/generated/graphlab.neuralnet_classifier.NeuralNetClassifier.html)
 
+Theano
+--------
+
+The MNIST example is based off this [link](http://deeplearning.net/tutorial/logreg.html) with some modifications especially around comments.
+
+Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz).
+
+Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
+
+Run from command line:
+    python lib/theano_mnist.py
+
+Setup: 
+    pip install theano
+
+[General Reference](http://deeplearning.net/software/theano/index.html)
+
+
 Lasagne 
 --------
-MNIST example at this [link](https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py)
+MNIST example based off this [link](https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py)
 
-Built off of Theano
+Machine learning library built off of Theano
 
 Run from command line:
   python lib/lasagne_mnist.py
@@ -48,20 +58,21 @@ Setup:
 [General Reference](http://lasagne.readthedocs.org/en/latest/)
 
 
-
-PyBrain
+Scikit-Learn
 --------
-MNIST example at this [link](http://martin-thoma.com/classify-mnist-with-pybrain/)
+
+MNIST example originally referenced this [link](http://www.pyimagesearch.com/2014/06/23/applying-deep-learning-rbm-mnist-using-python/) with modifications.
+
+Note scikit-learn uses an RBM model and they are combingin the RBM with Logistict Regression to create the model that runs predictions.
 
 Run from command line:
-    python lib/pybrain_mnist.py -e 10000 -H 300
+    python sklearn_mnist.py
 
 Setup:
-    pip install pybrain
-    https://github.com/pybrain/pybrain/wiki/installation
+    pip install -U numpy scipy scikit-learn
+    http://scikit-learn.org/stable/install.html
 
-[General Reference](http://pybrain.org/docs/)
-
+[General Reference](http://scikit-learn.org/stable/modules/neural_networks.html)
 
 
 PyLearn2
@@ -105,37 +116,30 @@ Explanation at this [link](http://deeplearning.net/software/pylearn2/#download-a
 
 [General Reference](http://deeplearning.net/software/pylearn2/)
 
-Scikit-Learn
---------
 
-MNIST example is from [link](http://www.pyimagesearch.com/2014/06/23/applying-deep-learning-rbm-mnist-using-python/)
+PyBrain
+--------
+MNIST example at this [link](http://martin-thoma.com/classify-mnist-with-pybrain/)
 
 Run from command line:
-    python sklearn_mnist.py --dataset data/digits.csv --test 0.4
+    python lib/pybrain_mnist.py -e 10000 -H 300
 
 Setup:
-    pip install -U numpy scipy scikit-learn
-    http://scikit-learn.org/stable/install.html
+    pip install pybrain
+    https://github.com/pybrain/pybrain/wiki/installation
 
-[General Reference](http://scikit-learn.org/stable/modules/neural_networks.html)
+[General Reference](http://pybrain.org/docs/)
 
-Theano
+
+
+Caffe
 --------
+MNIST example at this [link](?)
 
-The MNIST example is from this [link](http://deeplearning.net/tutorial/logreg.html) with some modifications especially around comments.
 
-Data is located at this [link](http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz).
+Setup:
 
-Additional tutorial at this [link](http://nbviewer.ipython.org/github/craffel/theano-tutorial/blob/master/Theano%20Tutorial.ipynb).
-
-Run from command line:
-    python lib/theano_mnist.py
-
-Setup: 
-    pip install theano
-
-[General Reference](http://deeplearning.net/software/theano/index.html)
-
+[General Reference](http://tutorial.caffe.berkeleyvision.org/)
 
 Setup:
 --------

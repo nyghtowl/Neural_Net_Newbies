@@ -5,6 +5,4 @@ inputs = graphlab.SFrame(filename)
 
 model = graphlab.neuralnet_classifier.create(inputs, target='label')
 
-outputs = model.classify(new_data)
-
 model.evaluate(test_data)

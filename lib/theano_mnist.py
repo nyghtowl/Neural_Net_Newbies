@@ -26,10 +26,6 @@ References:
     - textbooks: "Pattern Recognition and Machine Learning" -
                  Christopher M. Bishop, section 4.3.2
 
-Initial Run: 39 seconds and 74 epochs with lowest error 7.489% 
-
-Code initially pulled from: http://deeplearning.net/tutorial/logreg.html
-
 """
 __docformat__ = 'restructedtext en'
 

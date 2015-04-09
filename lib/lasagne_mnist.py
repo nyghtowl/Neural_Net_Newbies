@@ -1,7 +1,6 @@
 '''
 Lasagne MNIST Example / Tutorial
 
-Code pulled directly from: https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py
 '''
 
 from __future__ import print_function
