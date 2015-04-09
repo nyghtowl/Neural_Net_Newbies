@@ -1,9 +1,9 @@
 Neural_Net_Newbies
 ==================
 
-Repository of machine learning python packages' code examples to build, train and run a neural net on MNIST data. A small sample is used in my PyCon 2015 presentation and the rest is for reference afterwards under lib/slide_code.py.
+Repository of machine learning python packages' code examples to build, train and run a neural net on MNIST data. A small code sample is used in my PyCon 2015 presentation and the rest is for reference afterwards under lib/slide_code.py.
 
-The "hello world" of neural nets is the [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) and the link is the original source about the dataset.
+The [MNIST Dataset](http://yann.lecun.com/exdb/mnist/) is the "hello world" of neural nets,  and the link is the original source about the dataset.
 
 Note: All examples assume supervised learning.
 
@@ -97,5 +97,7 @@ Setup:
 
 Other:
 --------
-Most setup references assume python and pip installed. Check documentation for other options especially if setting up on GPUs.
+Most setup references assume python and pip installed. Check documentation for other options especially if setting up on GPUs. 
+
+If you want to add to this repo, send me a PR.
 
