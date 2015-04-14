@@ -39,6 +39,19 @@ Setup:
 
 [General Reference](https://dato.com/products/create/docs/generated/graphlab.neuralnet_classifier.NeuralNetClassifier.html) for more information about the package.
 
+OpenDeep 
+--------
+The MNIST example in this repo is based off this [link](http://www.opendeep.org/docs/tutorial-classifying-handwritten-mnist-images). This deep learning library is built off of Theano.
+
+Run from command line:
+
+      python lib/opendeep_mnist.py
+
+Setup:
+   * http://www.opendeep.org/docs/getting-started
+
+[General Reference](http://www.opendeep.org/) for more information about the package.
+
 Lasagne 
 --------
 The MNIST example in this repo is based off this [link](https://github.com/craffel/Lasagne-tutorial/blob/master/examples/mnist.py) with modifications. This machine learning library is built off of Theano.
