@@ -12,8 +12,8 @@ from opendeep.data.standard_datasets.image.mnist import MNIST
 config_root_logger()
 
 def create_mlp():
-    # This method is to demonstrate adding layers one-by-one to a Prototype container.
-    # As you can see, inputs_hook are created automatically by Prototype so we don't need to specify!
+    # add layers one-by-one to a Prototype container to build neural net
+    # inputs_hook created automatically by Prototype; thus, no need to specify
     mlp = Prototype()
     mlp.add(BasicLayer(input_size=28*28, output_size=512, activation='rectifier', noise='dropout'))
     mlp.add(BasicLayer(output_size=512, activation='rectifier', noise='dropout'))
@@ -22,11 +22,15 @@ def create_mlp():
     return mlp
 
 def main():
-    # grab our dataset (and don't concatenate together train and valid sets)
+    print '... load and setup data'
+    # don't concatenate together train and valid sets
     mnist_dataset = MNIST(concat_train_valid=False)
+
+    print '... building the model structure'
     # create the mlp model from a Prototype
     mlp = create_mlp()
-    # create an optimizer to train the model (stochastic gradient descent)
+    
+    # setup optimizer stochastic gradient descent 
     optimizer = SGD(model=mlp,
                     dataset=mnist_dataset,
                     n_epoch=500,
@@ -35,8 +39,12 @@ def main():
                     momentum=.9,
                     nesterov_momentum=True,
                     save_frequency=500)
-    # train it! feel free to do a KeyboardInterrupt - it will save the latest parameters.
+
+    print '... training the model'    
+    # [optional] use keyboardInterrupt to save the latest parameters.
     optimizer.train()
+
+    print '... evaluate model - TBD' 
 
 if __name__ == '__main__':
     main()
