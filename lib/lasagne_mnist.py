@@ -183,6 +183,7 @@ def train(iter_funcs, dataset, batch_size=BATCH_SIZE):
 
 
 def main(num_epochs=NUM_EPOCHS):
+    print('... loading and seting-up data')
     dataset = load_data()
 
     print('... building the model structure')
