@@ -8,3 +8,7 @@ tmp/
 var/
 out/
 .ipy
+
+*.pkl
+lib/outputs/
+outputs/

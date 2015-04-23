@@ -183,16 +183,17 @@ def train(iter_funcs, dataset, batch_size=BATCH_SIZE):
 
 
 def main(num_epochs=NUM_EPOCHS):
+    print('... loading and seting-up data')
     dataset = load_data()
 
-    print '... building the model structure'
+    print('... building the model structure')
     output_layer = build_model(
         input_dim=dataset['input_dim'],
         output_dim=dataset['output_dim'],
         )
     iter_funcs = create_iter_functions(dataset, output_layer)
 
-    print '... training the model'
+    print('... training the model')
     for epoch in train(iter_funcs, dataset):
         print("Epoch %d of %d" % (epoch['number'], num_epochs))
         print("  training loss:\t\t%.6f" % epoch['train_loss'])
