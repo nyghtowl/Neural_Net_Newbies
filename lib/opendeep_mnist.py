@@ -74,5 +74,6 @@ def main(plot=None, n_epoch=10):
     test_data, test_labels = split_data(mnist_dataset)
     evaluate(test_data, test_labels, model)
 
+
 if __name__ == '__main__':
     main()
